@@ -153,6 +153,7 @@ will be used for answering _Quiz 4_.
 # Predictions using the testing
 # set
 # ----------------------------
+
 # Predict using model and test set
 predict_test <- predict(model, testing, type="raw")
 
