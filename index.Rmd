@@ -19,7 +19,7 @@ well they do it**_. In this project, I aim to use data from accelerometers on th
 belt, forearm, arm, and dumbell of 6 participants. They were asked to perform barbell 
 lifts correctly and incorrectly in 5 different ways. 
 
-# Objectives
+## Objectives
 The main objective is to predict the manner in which a set of 20 individuals did their
 exercise based on a predictive modelling using the `caret` package. The output variable 
 is the _classe_ variable in the set. 
@@ -64,7 +64,7 @@ testing  <- fread("https://d396qusza40orc.cloudfront.net/predmachlearn/pml-testi
                   na.strings=c("NA", "", "#DIV/0!"))
 ```
 
-# Data Pre-processing
+## Data Pre-processing
 
 Variables with no meaningful relation with the outcome variable (e.g. V1, user name, and 
 the different timestamp variables) were removed from the training set. Predictors with zero 
@@ -149,7 +149,14 @@ did their exercise (i.e. the variable `classe`). The results are presented below
 will be used for answering _Quiz 4_.
 
 ```{r}
+# ----------------------------
+# Predictions using the testing
+# set
+# ----------------------------
+# Predict using model and test set
 predict_test <- predict(model, testing, type="raw")
+
+# Print predictions
 predict_test
 
 # ----------------------------

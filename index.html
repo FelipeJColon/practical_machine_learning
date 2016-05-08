@@ -71,9 +71,10 @@ img {
 <h2>Background</h2>
 <p>Using devices such as <em>Jawbone Up, Nike FuelBand</em>, and <em>Fitbit</em> it is now possible to collect a large amount of data about personal activity relatively inexpensively. These type of devices are part of the quantified self movement (a group of enthusiasts who take measurements about themselves regularly to improve their health, to find patterns in their behavior, or because they are tech geeks). One thing that people regularly do is quantify how much of a particular activity they do, but they <em><strong>rarely quantify how well they do it</strong></em>. In this project, I aim to use data from accelerometers on the belt, forearm, arm, and dumbell of 6 participants. They were asked to perform barbell lifts correctly and incorrectly in 5 different ways.</p>
 </div>
-<div id="objectives" class="section level1">
-<h1>Objectives</h1>
+<div id="objectives" class="section level2">
+<h2>Objectives</h2>
 <p>The main objective is to predict the manner in which a set of 20 individuals did their exercise based on a predictive modelling using the <code>caret</code> package. The output variable is the <em>classe</em> variable in the set.</p>
+</div>
 <div id="data" class="section level2">
 <h2>Data</h2>
 <p>The training data for this project were kindly provided by:</p>
@@ -102,9 +103,8 @@ training &lt;- fread(&quot;https://d396qusza40orc.cloudfront.net/predmachlearn/p
 testing  &lt;- fread(&quot;https://d396qusza40orc.cloudfront.net/predmachlearn/pml-testing.csv&quot;,
                   na.strings=c(&quot;NA&quot;, &quot;&quot;, &quot;#DIV/0!&quot;))</code></pre>
 </div>
-</div>
-<div id="data-pre-processing" class="section level1">
-<h1>Data Pre-processing</h1>
+<div id="data-pre-processing" class="section level2">
+<h2>Data Pre-processing</h2>
 <p>Variables with no meaningful relation with the outcome variable (e.g. V1, user name, and the different timestamp variables) were removed from the training set. Predictors with zero or near zero variance were also removed from the training set. It is noted that several predictors have a large number of missing values (i.e. &gt; 75%). Predictors missing 75% or more observations were removed from the trainig set too.</p>
 <pre class="r"><code># ----------------------------
 # Data selection
@@ -120,6 +120,7 @@ training_sub &lt;- dplyr::select(training_sub, -matches(&quot;V1|timestamp|user_
 threshold    &lt;- nrow(training_sub)*0.75 # Threshold for 75% of observations
 drop_vars    &lt;- training_sub[, colSums(is.na(training_sub)) &gt; threshold] # identify vars
 training_sub &lt;- training_sub[, -drop_vars, with=FALSE] # remove from set</code></pre>
+</div>
 <div id="fitting-predictive-models-using-cross-validation" class="section level2">
 <h2>Fitting Predictive Models Using Cross-Validation</h2>
 <p>For this project, I fit a model using the random forest routine. I selected the <strong><em>random forest</em></strong> routine aiming for the greatest accuracy possible. I use <em><strong>10-fold cross-validation</strong></em> to obtain the model with the lowest test error. To test the accuracy, specificity and sensitivity of the model, I use partitioned the training subset into a further training and testing sets comprising 75% and 25% of the observations respectively. The relative importance of the top 10 predictors is shown in the figure below.</p>
@@ -196,14 +197,20 @@ confusionMatrix(testing_sub2$classe, predictions)</code></pre>
 <div id="predictions-on-the-test-set" class="section level2">
 <h2>Predictions On The Test Set</h2>
 <p>I finally used the fitted model to predict the manner in which 20 different individuals did their exercise (i.e. the variable <code>classe</code>). The results are presented below and will be used for answering <em>Quiz 4</em>.</p>
-<pre class="r"><code>predict_test &lt;- predict(model, testing, type=&quot;raw&quot;)
+<pre class="r"><code># ----------------------------
+# Predictions using the testing
+# set
+# ----------------------------
+# Predict using model and test set
+predict_test &lt;- predict(model, testing, type=&quot;raw&quot;)
+
+# Print predictions
 predict_test</code></pre>
 <pre><code>##  [1] B A B A A E D B A A B C B A E E A B B B
 ## Levels: A B C D E</code></pre>
 <pre class="r"><code># ----------------------------
 # End of file
 # ----------------------------</code></pre>
-</div>
 </div>
 
 
