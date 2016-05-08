@@ -1,11 +1,6 @@
----
-title: "Practical Machine Learning Course Project"
-author: "Felipe J Colon-Gonzalez"
-date: "7 May 2016"
-output: 
-  html_document: 
-    keep_md: yes
----
+# Practical Machine Learning Course Project
+Felipe J Colon-Gonzalez  
+7 May 2016  
 
 ## Background
 
@@ -42,7 +37,8 @@ The test set is available in this other link:
 
 https://d396qusza40orc.cloudfront.net/predmachlearn/pml-testing.csv
 
-```{r, message=FALSE}
+
+```r
 # ----------------------------
 # Load packages and data
 # ----------------------------
@@ -72,7 +68,8 @@ or near zero variance were also removed from the training set. It is noted that 
 predictors have a large number of missing values (i.e. > 75%). Predictors missing 75% or 
 more observations were removed from the trainig set too.
 
-```{r}
+
+```r
 # ----------------------------
 # Data selection
 # ----------------------------
@@ -97,7 +94,8 @@ cross-validation**_ to obtain the model with the lowest test error. To test the 
 further training and testing sets comprising 75% and 25% of the observations respectively.
 The relative importance of the top 10 predictors is shown in the figure below.
 
-```{r, cache=TRUE}
+
+```r
 # ----------------------------
 # Data selection
 # ----------------------------
@@ -116,14 +114,16 @@ model <- train(classe ~., data=training_sub2, method="rf",
 
 # Plot the 10 most important variables in the model
 dotPlot(varImp(model, scale=FALSE), top=10)
-
 ```
+
+![](index_files/figure-html/unnamed-chunk-3-1.png)<!-- -->
 
 ## Calculating Out of Sample Predictions
 The following step is to compute the out-of-sample predictions on the test subset to 
 evaluate the model's performance.  
 
-```{r}
+
+```r
 # ----------------------------
 # Out of sample predictions
 # ----------------------------
@@ -137,6 +137,40 @@ pred_error  <- 1 - sum(predictions == testing_sub2$classe)/length(predictions)
 confusionMatrix(testing_sub2$classe, predictions)
 ```
 
+```
+## Confusion Matrix and Statistics
+## 
+##           Reference
+## Prediction    A    B    C    D    E
+##          A 1395    0    0    0    0
+##          B    0  948    1    0    0
+##          C    0    0  852    3    0
+##          D    0    0    1  802    1
+##          E    0    0    0    1  900
+## 
+## Overall Statistics
+##                                                
+##                Accuracy : 0.9986               
+##                  95% CI : (0.9971, 0.9994)     
+##     No Information Rate : 0.2845               
+##     P-Value [Acc > NIR] : < 0.00000000000000022
+##                                                
+##                   Kappa : 0.9982               
+##  Mcnemar's Test P-Value : NA                   
+## 
+## Statistics by Class:
+## 
+##                      Class: A Class: B Class: C Class: D Class: E
+## Sensitivity            1.0000   1.0000   0.9977   0.9950   0.9989
+## Specificity            1.0000   0.9997   0.9993   0.9995   0.9998
+## Pos Pred Value         1.0000   0.9989   0.9965   0.9975   0.9989
+## Neg Pred Value         1.0000   1.0000   0.9995   0.9990   0.9998
+## Prevalence             0.2845   0.1933   0.1741   0.1644   0.1837
+## Detection Rate         0.2845   0.1933   0.1737   0.1635   0.1835
+## Detection Prevalence   0.2845   0.1935   0.1743   0.1639   0.1837
+## Balanced Accuracy      1.0000   0.9999   0.9985   0.9973   0.9993
+```
+
 ## Initial Results
 The results on the out-of-sample set indicate that the model's accuracy is 99.90% 
 (95% CI 99.76-99.97) - with an out-of-sample test error of 0.10%. Thus, I expect the
@@ -148,10 +182,18 @@ I finally used the fitted model to predict the manner in which 20 different indi
 did their exercise (i.e. the variable `classe`). The results are presented below and
 will be used for answering _Quiz 4_.
 
-```{r}
+
+```r
 predict_test <- predict(model, testing, type="raw")
 predict_test
+```
 
+```
+##  [1] B A B A A E D B A A B C B A E E A B B B
+## Levels: A B C D E
+```
+
+```r
 # ----------------------------
 # End of file
 # ----------------------------
