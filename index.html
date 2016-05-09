@@ -125,7 +125,7 @@ training_sub &lt;- training_sub[, -drop_vars, with=FALSE] # remove from set</cod
 <h2>Fitting Predictive Models Using Cross-Validation</h2>
 <p>For this project, I fit a model using the random forest routine. I selected the <strong><em>random forest</em></strong> routine aiming for the greatest accuracy possible. I use <em><strong>10-fold cross-validation</strong></em> to obtain the model with the lowest test error. To test the accuracy, specificity and sensitivity of the model, I use partitioned the training subset into a further training and testing sets comprising 75% and 25% of the observations respectively. The relative importance of the top 10 predictors is shown in the figure below.</p>
 <pre class="r"><code># ----------------------------
-# Data selection
+# Model fit
 # ----------------------------
 # Create partition
 set.seed(65432)
