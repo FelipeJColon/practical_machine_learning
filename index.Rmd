@@ -99,7 +99,7 @@ The relative importance of the top 10 predictors is shown in the figure below.
 
 ```{r, cache=TRUE}
 # ----------------------------
-# Data selection
+# Model fit
 # ----------------------------
 # Create partition
 set.seed(65432)
